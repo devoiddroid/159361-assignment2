@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController controller;
     private float Gravity = -9.81f * 2;
     private Vector3 playerVelocity;
-    private bool isOnGround;
+    public bool isOnGround;
     private Animator animator;
 
     // Start is called before the first frame update
