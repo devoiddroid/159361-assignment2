@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
-    public GameObject player;
+    [SerializeField]
+    private GameObject player;
     private float playerYpos;
     private Vector3 offset;
-    private Quaternion cameraRotation;
+    // private Quaternion cameraRotation;
     private PlayerMovement playerMovementScript;
 
     // Start is called before the first frame update
     void Start()
     {
         playerYpos = player.transform.position.y;
-        cameraRotation = transform.rotation;
+        // cameraRotation = transform.rotation;
         playerMovementScript = player.GetComponent<PlayerMovement>();
         offset = transform.position - player.transform.position;
     }
@@ -22,17 +23,7 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Vector3 playerPos = player.transform.position;
-        // if (playerMovementScript.isOnGround) {
-        playerYpos = player.transform.position.y;
-        // }
-        // offset.y = playerYpos + 3;
-        // Vector3 cameraPos = new Vector3(
-        //     playerPos.x, 
-        //     playerYpos + 3, 
-        //     playerPos.z - 6
-        // );
-        // transform.position = cameraPos;
+        
     }
 
     void LateUpdate() {
@@ -43,9 +34,15 @@ public class CameraScript : MonoBehaviour
             playerPos.z
         );
         targetPos = targetPos + offset;
+        targetPos.x = playerPos.x;
         Vector3 smoothFollow = Vector3.Lerp(transform.position, targetPos, 0.1f);
 
         transform.position = smoothFollow;
-        transform.LookAt(player.transform.Find("FocalPoint").transform);
+
+        // Don't look at the player unless they're on the ground, otherwise we lose sight of the level terrain
+        if (playerMovementScript.isOnGround) {
+            transform.LookAt(player.transform.Find("FocalPoint").transform);
+        }
+        
     }
 }

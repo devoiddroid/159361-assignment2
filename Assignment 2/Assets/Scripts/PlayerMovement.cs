@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController controller;
     private float Gravity = -9.81f * 2;
     private Vector3 playerVelocity;
+    public Vector3 playerResetPosition;
     public bool isOnGround;
     private Animator animator;
 
@@ -26,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         isOnGround = true;
+        playerResetPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -52,6 +54,15 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(moveDirection * Time.deltaTime * Speed);
 
         // Jump handling ----------------------------------------------
+        Jump();
+
+        // Reset player position --------------------------------------
+        if (transform.position.y <= -20) {
+            transform.position = playerResetPosition;
+        }
+    }
+
+    private void Jump() {
         if (Input.GetButtonDown("Jump") && isOnGround) {
             playerVelocity.y += Mathf.Sqrt(JumpForce * -3.0f * Gravity);
             isOnGround = false;
@@ -59,5 +70,12 @@ public class PlayerMovement : MonoBehaviour
         }
         playerVelocity.y += Gravity * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+    }
+
+    public void Bounce() {
+        playerVelocity.y += Mathf.Sqrt(JumpForce * -3.0f * Gravity);
+        isOnGround = false;
+        animator.SetTrigger("Jump");
+        Jump();
     }
 }
