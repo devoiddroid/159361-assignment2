@@ -53,14 +53,6 @@ public class ChargerScript : MonoBehaviour
     // Should add all animations to here.
     void Update()
     {
-        if(!turning && ! stunnedStatus) {
-            animator.SetBool("Run Forward", true);
-            animator.SetBool("WalkForward", false);
-        } if (turning) {
-            animator.SetBool("WalkForward", true);
-        } if (stunnedStatus) {
-            animator.SetBool("Stunned Loop", true);
-        }
         Debug.DrawRay(ray.origin, ray.direction * 3);
     }
 
@@ -89,10 +81,18 @@ public class ChargerScript : MonoBehaviour
                             transform.eulerAngles = targetRotation;
                             turning = false;
                             running = true;
+                            animator.SetBool("Run Forward", true);
+                            animator.SetBool("WalkForward", false);                           
                         }
                     }                  
             } else {
                 deccelerate();
+                if (currentSpeed <=1) {
+                    currentSpeed = 0;
+                    rb.velocity = new Vector3(0,0,0);
+                    stopping = false;
+                    ChangeDirection();
+                }
             }
         }
     }
@@ -102,12 +102,7 @@ public class ChargerScript : MonoBehaviour
         print("stopping");
         rb.velocity = new Vector3(rb.velocity.x *0.8f, rb.velocity.y*0.8f, rb.velocity.z*0.8f);
         currentSpeed = rb.velocity.magnitude;
-        if (currentSpeed <=1) {
-            currentSpeed = 0;
-            rb.velocity = new Vector3(0,0,0);
-            stopping = false;
-            ChangeDirection();
-        }
+
     }
 
     // Function takes raycast from in front of agent and checks if there is a floor ahead.
@@ -128,7 +123,10 @@ public class ChargerScript : MonoBehaviour
             stunStartTime = Time.time;
         }
         if (other.gameObject.tag == "Player") {
-            animator.Play("Attack 5");
+            stopping = true;
+            animator.Play("Attack5");
+            
+            print("attack");
         }
 
     }
@@ -139,6 +137,7 @@ public class ChargerScript : MonoBehaviour
         running = false;
         turning = true;
         animator.SetBool("Run Forward", false);
+        animator.SetBool("WalkForward", true);
         currentSpeed = 0;
         if (direction) {
             targetRotation = currentRotation + new Vector3 (0,180,0);
@@ -154,6 +153,7 @@ public class ChargerScript : MonoBehaviour
         print("stunned");
         if (Time.time-startTime < StunTime){
             animator.SetBool("Run Forward", false);
+            animator.SetBool("Stunned Loop", true);
         } else {
             stunnedStatus = false;
             animator.SetBool("Stunned Loop", false);
