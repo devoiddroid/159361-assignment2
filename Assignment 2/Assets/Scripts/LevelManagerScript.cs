@@ -7,6 +7,7 @@ public class LevelManagerScript : MonoBehaviour
 {
     [SerializeField]
     private GameObject CollectablesList;
+    private GameObject[] BrokenBoardsList;
     private int TotalCollectables;
     private int AcquiredCollectables;
     [SerializeField]
@@ -16,6 +17,7 @@ public class LevelManagerScript : MonoBehaviour
     void Start()
     {
         TotalCollectables = CollectablesList.transform.childCount;
+        BrokenBoardsList = GameObject.FindGameObjectsWithTag("BrokenBoard");
     }
 
     // Update is called once per frame
@@ -25,6 +27,12 @@ public class LevelManagerScript : MonoBehaviour
     }
 
     public void AcquiredCollectable() {
-        this.AcquiredCollectables++;
+        AcquiredCollectables += 1;
+    }
+
+    public void ResetBrokenBoards() {
+        for (int i = 0; i < BrokenBoardsList.Length; i++) {
+            BrokenBoardsList[i].GetComponent<BrokenBoardScript>().ResetBoardPosition();
+        }
     }
 }

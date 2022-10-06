@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float JumpForce;
-    public float Speed;
-    public float TurnSpeed;
+    [SerializeField]
+    private LevelManagerScript levelManagerScript;
+    [SerializeField]
+    private float JumpForce;
+    [SerializeField]
+    private float Speed;
+    [SerializeField]
+    private float TurnSpeed;
 
-    private Rigidbody rb;
     private CharacterController controller;
     private float Gravity = -9.81f * 2;
     private Vector3 playerVelocity;
@@ -23,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        rb = GetComponent<Rigidbody>();
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         isOnGround = true;
@@ -59,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
         // Reset player position --------------------------------------
         if (transform.position.y <= -20) {
             transform.position = playerResetPosition;
+            levelManagerScript.ResetBrokenBoards();
         }
     }
 
