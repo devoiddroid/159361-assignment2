@@ -6,18 +6,22 @@ public class CameraScript : MonoBehaviour
 {
     [SerializeField]
     private GameObject player;
-    private float playerYpos;
     private Vector3 offset;
-    // private Quaternion cameraRotation;
+    private Vector3 targetPos;
     private PlayerMovement playerMovementScript;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerYpos = player.transform.position.y;
-        // cameraRotation = transform.rotation;
+        // playerYpos = player.transform.position.y;
         playerMovementScript = player.GetComponent<PlayerMovement>();
-        offset = transform.position - player.transform.position;
+        targetPos = new Vector3(
+            player.transform.position.x, 
+            player.transform.position.y + 2, 
+            player.transform.position.z - 6
+        );
+        transform.position = targetPos;
+        offset = transform.position - targetPos;
     }
 
     // Update is called once per frame
@@ -28,13 +32,12 @@ public class CameraScript : MonoBehaviour
 
     void LateUpdate() {
         Vector3 playerPos = player.transform.position;
-        Vector3 targetPos = new Vector3(
+        targetPos = new Vector3(
             playerPos.x, 
-            playerYpos + 2, 
-            playerPos.z
+            playerPos.y + 2, 
+            playerPos.z - 6
         );
         targetPos = targetPos + offset;
-        targetPos.x = playerPos.x;
         Vector3 smoothFollow = Vector3.Lerp(transform.position, targetPos, 0.1f);
 
         transform.position = smoothFollow;

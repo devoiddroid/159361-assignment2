@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Collectable_Gem
   - BrokenBoard
+  - FinishLine
+  - LevelManager
+  - HUD
+  - LevelFinishScreen
   layers:
   - Default
   - TransparentFX
