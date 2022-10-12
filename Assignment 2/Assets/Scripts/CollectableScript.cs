@@ -24,8 +24,9 @@ public class CollectableScript : MonoBehaviour
     private void OnTriggerEnter(Collider collider) {
         // If the player collided with this object, destroy it
         if (collider.CompareTag("Player")) {
-            levelManagerScript.AcquiredCollectable();
+            Debug.Log("Gem collision");
             Destroy(gameObject);
+            levelManagerScript.AcquiredCollectable();
         }
     }
 }

@@ -23,16 +23,18 @@ public class LevelManagerScript : MonoBehaviour
     void Start()
     {
         TotalCollectables = CollectablesList.transform.childCount;
+        CollectableHUDField.text = AcquiredCollectables + " / " + TotalCollectables;
         BrokenBoardsList = GameObject.FindGameObjectsWithTag("BrokenBoard");
         HUD = GameObject.FindGameObjectWithTag("HUD");
         LevelFinishScreen = GameObject.FindGameObjectWithTag("LevelFinishScreen");
         LevelFinishScreen.SetActive(false);
+        GameObject checkpointNotice = GameObject.FindGameObjectWithTag("CheckpointNotice");
+        checkpointNotice.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        CollectableHUDField.text = AcquiredCollectables + " / " + TotalCollectables;
         if (LevelFinished) {
             LevelFinishScreen.SetActive(true);
             HUD.SetActive(false);
@@ -69,6 +71,9 @@ public class LevelManagerScript : MonoBehaviour
     public void AcquiredCollectable() 
     {
         AcquiredCollectables += 1;
+        // AcquiredCollectables = TotalCollectables - GameObject.FindGameObjectsWithTag("Collectable_Gem").Length;
+        Debug.Log("Gems collected: " + AcquiredCollectables);
+        CollectableHUDField.text = AcquiredCollectables + " / " + TotalCollectables;
     }
 
     public void ResetBrokenBoards() 

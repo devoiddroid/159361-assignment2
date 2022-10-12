@@ -10,6 +10,7 @@ TagManager:
   - LevelManager
   - HUD
   - LevelFinishScreen
+  - CheckpointNotice
   layers:
   - Default
   - TransparentFX

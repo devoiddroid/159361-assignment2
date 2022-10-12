@@ -13,11 +13,10 @@ public class CameraScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // playerYpos = player.transform.position.y;
         playerMovementScript = player.GetComponent<PlayerMovement>();
         targetPos = new Vector3(
             player.transform.position.x, 
-            player.transform.position.y + 2, 
+            player.transform.position.y + 3, 
             player.transform.position.z - 6
         );
         transform.position = targetPos;
@@ -34,7 +33,7 @@ public class CameraScript : MonoBehaviour
         Vector3 playerPos = player.transform.position;
         targetPos = new Vector3(
             playerPos.x, 
-            playerPos.y + 2, 
+            playerPos.y + 3, 
             playerPos.z - 6
         );
         targetPos = targetPos + offset;
