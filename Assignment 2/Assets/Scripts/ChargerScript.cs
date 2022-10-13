@@ -10,7 +10,7 @@ public class ChargerScript : MonoBehaviour
     private Vector3 currentPosition;
     private Rigidbody rb;
     private Vector3 currentRotation;
-    private Vector3 targetRotation;
+    private Quaternion targetRotation;
     private Vector3 startingRotation;
     private Vector3 eulerRotation;
     private float currentSpeed;
@@ -45,6 +45,7 @@ public class ChargerScript : MonoBehaviour
         eulerRotation = new Vector3(0, TurnSpeed, 0);
         animator = GetComponent<Animator>();
         animator.Play("Base Layer.Combat Idle", 0, 0.25f);
+        animator.SetBool("Run Forward", true);
         ray = new Ray(transform.position + (transform.forward * 3f) + (transform.up * 1.5f), Vector3.down);
         
     }
@@ -53,7 +54,8 @@ public class ChargerScript : MonoBehaviour
     // Should add all animations to here.
     void Update()
     {
-        Debug.DrawRay(ray.origin, ray.direction * 3);
+        // uncomment below to see edge detection ray.  May rework this to instead use pathfinding map in future.
+        // Debug.DrawRay(ray.origin, ray.direction * 3);
     }
 
     void FixedUpdate() {
@@ -64,6 +66,7 @@ public class ChargerScript : MonoBehaviour
         else {
 
             if(!stopping) {
+                // if it is running then accelerate while under maxspeed
                 if (running) {
                     if (currentSpeed < MaxSpeed){
                         float accelTick = Accel * Time.fixedDeltaTime;
@@ -71,14 +74,17 @@ public class ChargerScript : MonoBehaviour
                     } 
                     currentSpeed = rb.velocity.magnitude;
                     EdgeCheck();
+                    // else if its turning then check if it has changed direction yet.
                 } else if (turning) {
-                        
+                    // rotate then take 
                     Quaternion incrementRotation = Quaternion.Euler(eulerRotation * Time.deltaTime);
                     rb.MoveRotation(rb.rotation * incrementRotation);
-                        currentRotation = transform.eulerAngles;
-                        
-                        if (Vector3.Distance(currentRotation,targetRotation) < 5){
-                            transform.eulerAngles = targetRotation;
+                    //currentRotation = transform.rotation;
+                    //float angle = 
+                        if (Quaternion.Angle(transform.rotation,targetRotation) < 0.01f){
+                            
+                            //print(Vector3.Angle(currentRotation,targetRotation));
+                            transform.rotation = targetRotation;
                             turning = false;
                             running = true;
                             animator.SetBool("Run Forward", true);
@@ -140,10 +146,11 @@ public class ChargerScript : MonoBehaviour
         animator.SetBool("WalkForward", true);
         currentSpeed = 0;
         if (direction) {
-            targetRotation = currentRotation + new Vector3 (0,180,0);
+            targetRotation = Quaternion.Euler(currentRotation + new Vector3 (0,180,0));
+            print(targetRotation);
             direction = false;
         } else {
-            targetRotation = startingRotation;
+            targetRotation = Quaternion.Euler(startingRotation);
             direction = true;
         }
     }
