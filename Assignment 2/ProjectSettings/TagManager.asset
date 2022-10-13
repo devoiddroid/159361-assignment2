@@ -4,6 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Collectable_Gem
+  - BrokenBoard
+  - FinishLine
+  - LevelManager
+  - HUD
+  - LevelFinishScreen
+  - CheckpointNotice
   - ground
   layers:
   - Default
