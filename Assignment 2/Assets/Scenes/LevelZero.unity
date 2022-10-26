@@ -3754,7 +3754,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1681443564013062710, guid: 9aad95fcd95603c49bd5d76236ea0c63, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1681443564013062710, guid: 9aad95fcd95603c49bd5d76236ea0c63, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3800,6 +3800,10 @@ PrefabInstance:
       propertyPath: playerMovement
       value: 
       objectReference: {fileID: 1835883164}
+    - target: {fileID: 3418395927162031524, guid: 9aad95fcd95603c49bd5d76236ea0c63, type: 3}
+      propertyPath: levelManagerScript
+      value: 
+      objectReference: {fileID: 1002464072}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9aad95fcd95603c49bd5d76236ea0c63, type: 3}
 --- !u!4 &1979421277550441421 stripped
