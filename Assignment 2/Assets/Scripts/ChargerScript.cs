@@ -20,6 +20,7 @@ public class ChargerScript : MonoBehaviour
     private bool running;
     private bool stunnedStatus;
     private bool edgeTrigger;
+    private bool attacking;
     private float stunStartTime;
     private Ray ray;
     // starting orientation = true, reverse = false.
@@ -41,6 +42,7 @@ public class ChargerScript : MonoBehaviour
         currentSpeed = 0;
         turning = false;
         running = true;
+        attacking = false;
         rb = GetComponent<Rigidbody>();
         eulerRotation = new Vector3(0, TurnSpeed, 0);
         animator = GetComponent<Animator>();
@@ -54,7 +56,7 @@ public class ChargerScript : MonoBehaviour
     // Should add all animations to here.
     void Update()
     {
-        // uncomment below to see edge detection ray.  May rework this to instead use pathfinding map in future.
+        // uncomment below to see edge detection ray.  May rework this to instead use navmesh in future.
         // Debug.DrawRay(ray.origin, ray.direction * 3);
     }
 
@@ -62,42 +64,44 @@ public class ChargerScript : MonoBehaviour
         // main physics
         if(stunnedStatus) {
             Stunned(stunStartTime);
-        } 
+        }
         else {
-
-            if(!stopping) {
-                // if it is running then accelerate while under maxspeed
-                if (running) {
-                    if (currentSpeed < MaxSpeed){
-                        float accelTick = Accel * Time.fixedDeltaTime;
-                        rb.AddForce(transform.forward * accelTick, ForceMode.Acceleration);
-                    } 
-                    currentSpeed = rb.velocity.magnitude;
-                    EdgeCheck();
-                    // else if its turning then check if it has changed direction yet.
-                } else if (turning) {
-                    // rotate then take 
-                    Quaternion incrementRotation = Quaternion.Euler(eulerRotation * Time.deltaTime);
-                    rb.MoveRotation(rb.rotation * incrementRotation);
-                    //currentRotation = transform.rotation;
-                    //float angle = 
-                        if (Quaternion.Angle(transform.rotation,targetRotation) < 0.01f){
-                            
-                            //print(Vector3.Angle(currentRotation,targetRotation));
+            if(attacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >=1) {
+                print(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+                attacking = false;
+            }
+            if (!attacking){
+                if(!stopping) {
+                    // if it is running then accelerate while under maxspeed
+                    if (running) {
+                        if (currentSpeed < MaxSpeed){
+                            float accelTick = Accel * Time.fixedDeltaTime;
+                            rb.AddForce(transform.forward * accelTick, ForceMode.Acceleration);
+                        } 
+                        currentSpeed = rb.velocity.magnitude;
+                        EdgeCheck();
+                        // else if its turning then check if it has changed direction yet.
+                    } else if (turning) {
+                        // rotate then take 
+                        Quaternion incrementRotation = Quaternion.Euler(eulerRotation * Time.deltaTime);
+                        rb.MoveRotation(rb.rotation * incrementRotation);
+                        if (Quaternion.Angle(transform.rotation,targetRotation) < 1f){
                             transform.rotation = targetRotation;
                             turning = false;
                             running = true;
                             animator.SetBool("Run Forward", true);
                             animator.SetBool("WalkForward", false);                           
                         }
-                    }                  
-            } else {
-                deccelerate();
-                if (currentSpeed <=1) {
-                    currentSpeed = 0;
-                    rb.velocity = new Vector3(0,0,0);
-                    stopping = false;
-                    ChangeDirection();
+                    }
+
+                } else {
+                    deccelerate();
+                    if (currentSpeed <=1) {
+                        currentSpeed = 0;
+                        rb.velocity = new Vector3(0,0,0);
+                        stopping = false;
+                        ChangeDirection();
+                    }
                 }
             }
         }
@@ -105,7 +109,7 @@ public class ChargerScript : MonoBehaviour
 
     // slow down to a stop
     private void deccelerate() {
-        print("stopping");
+        //print("stopping");
         rb.velocity = new Vector3(rb.velocity.x *0.8f, rb.velocity.y*0.8f, rb.velocity.z*0.8f);
         currentSpeed = rb.velocity.magnitude;
 
@@ -117,20 +121,25 @@ public class ChargerScript : MonoBehaviour
         bool rayResults = Physics.Raycast(ray, 3.0f);
         if (!rayResults) {
             print("edge");
+            rb.AddForce(-transform.forward*500, ForceMode.Impulse);
             stopping = true;
         }
     }
 
     private void OnCollisionEnter(Collision other) {
         // stuns creature on collision
-        print("collision");
+        //print("collision");
         if (other.gameObject.tag != "ground" && other.gameObject.tag != "Player") {
+            rb.AddForce(-transform.forward*500, ForceMode.Impulse);
             stunnedStatus = true;
             stunStartTime = Time.time;
         }
-        if (other.gameObject.tag == "Player") {
+        if (other.gameObject.tag == "Player" && !stunnedStatus) {
             stopping = true;
+            attacking = true;
             animator.Play("Attack5");
+            animator.SetBool("Run Forward", false);
+            animator.SetBool("WalkForward", false);
             
             print("attack");
         }
@@ -157,7 +166,7 @@ public class ChargerScript : MonoBehaviour
 
     // function for stun timer
     private void Stunned(float startTime){
-        print("stunned");
+        //print("stunned");
         if (Time.time-startTime < StunTime){
             animator.SetBool("Run Forward", false);
             animator.SetBool("Stunned Loop", true);
