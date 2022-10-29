@@ -61,6 +61,7 @@ public class LevelManagerScript : MonoBehaviour
 
     public void QuitGame()
     {
+        // Only works when running the built game, not in the editor
         Application.Quit();
     }
 
@@ -72,7 +73,6 @@ public class LevelManagerScript : MonoBehaviour
     public void AcquiredCollectable() 
     {
         AcquiredCollectables += 1;
-        // AcquiredCollectables = TotalCollectables - GameObject.FindGameObjectsWithTag("Collectable_Gem").Length;
         Debug.Log("Gems collected: " + AcquiredCollectables);
         CollectableHUDField.text = AcquiredCollectables + " / " + TotalCollectables;
     }

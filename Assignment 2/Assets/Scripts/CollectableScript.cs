@@ -22,11 +22,12 @@ public class CollectableScript : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider collider) {
-        // If the player collided with this object, destroy it
+        // If the player collided with this object, destroy it.
+        // Issue: sometimes this seems to get triggered twice.
         if (collider.CompareTag("Player")) {
             Debug.Log("Gem collision");
-            Destroy(gameObject);
             levelManagerScript.AcquiredCollectable();
+            Destroy(gameObject);
         }
     }
 }

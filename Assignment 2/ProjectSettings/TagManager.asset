@@ -12,6 +12,7 @@ TagManager:
   - LevelFinishScreen
   - CheckpointNotice
   - ground
+  - Enemy
   layers:
   - Default
   - TransparentFX
