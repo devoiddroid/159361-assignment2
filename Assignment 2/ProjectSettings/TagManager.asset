@@ -12,6 +12,7 @@ TagManager:
   - LevelFinishScreen
   - CheckpointNotice
   - ground
+  - MainMenu
   layers:
   - Default
   - TransparentFX
