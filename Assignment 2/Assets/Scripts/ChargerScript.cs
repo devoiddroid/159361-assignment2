@@ -37,7 +37,7 @@ public class ChargerScript : MonoBehaviour
     {
         currentPosition = transform.position;
         currentRotation = transform.eulerAngles;
-        print(currentRotation);
+        //print(currentRotation);
         startingRotation = currentRotation;
         currentSpeed = 0;
         turning = false;
@@ -66,8 +66,9 @@ public class ChargerScript : MonoBehaviour
             Stunned(stunStartTime);
         }
         else {
+            // check if attack animation finished
             if(attacking && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >=1) {
-                print(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+                //print(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
                 attacking = false;
             }
             if (!attacking){
@@ -95,6 +96,7 @@ public class ChargerScript : MonoBehaviour
                     }
 
                 } else {
+                    // slow down when edge detected then turn around
                     deccelerate();
                     if (currentSpeed <=1) {
                         currentSpeed = 0;
@@ -120,7 +122,7 @@ public class ChargerScript : MonoBehaviour
         ray.origin = transform.position + (transform.forward * 3f) + (transform.up * 1.5f);
         bool rayResults = Physics.Raycast(ray, 3.0f);
         if (!rayResults) {
-            print("edge");
+            //print("edge");
             rb.AddForce(-transform.forward*500, ForceMode.Impulse);
             stopping = true;
         }
@@ -134,6 +136,7 @@ public class ChargerScript : MonoBehaviour
             stunnedStatus = true;
             stunStartTime = Time.time;
         }
+        // attack if collided with another player while not stunned
         if (other.gameObject.tag == "Player" && !stunnedStatus) {
             stopping = true;
             attacking = true;
@@ -141,14 +144,14 @@ public class ChargerScript : MonoBehaviour
             animator.SetBool("Run Forward", false);
             animator.SetBool("WalkForward", false);
             
-            print("attack");
+            //print("attack");
         }
 
     }
 
     private void ChangeDirection() {
         // turns around 180 degrees
-        print("turning");
+        //print("turning");
         running = false;
         turning = true;
         animator.SetBool("Run Forward", false);
@@ -156,7 +159,7 @@ public class ChargerScript : MonoBehaviour
         currentSpeed = 0;
         if (direction) {
             targetRotation = Quaternion.Euler(currentRotation + new Vector3 (0,180,0));
-            print(targetRotation);
+            //print(targetRotation);
             direction = false;
         } else {
             targetRotation = Quaternion.Euler(startingRotation);
