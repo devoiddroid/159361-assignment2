@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 playerResetPosition;
     public bool isOnGround;
     private Animator animator;
+    private bool killed;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         isOnGround = true;
+        killed = false;
         playerResetPosition = transform.position;
     }
 
@@ -63,6 +65,13 @@ public class PlayerMovement : MonoBehaviour
         if (transform.position.y <= -20) {
             ResetPlayerPosition();
             levelManagerScript.ResetBrokenBoards();
+        }
+        // Had to disable character controller for this to work.
+        if (killed) {
+            controller.enabled = false;
+            killed = false;
+            ResetPlayerPosition();
+            controller.enabled = true;
         }
     }
 
@@ -102,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
         Time.timeScale = 0.2f;
         yield return new WaitForSeconds(0.5f);
         Time.timeScale = 1.0f;
-        ResetPlayerPosition();
+        killed = true;
+        //ResetPlayerPosition();
     }
 }

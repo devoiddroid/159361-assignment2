@@ -31,6 +31,7 @@ public class LevelManagerScript : MonoBehaviour
         LevelFinishScreen.SetActive(false);
         CheckpointNotice = GameObject.FindGameObjectWithTag("CheckpointNotice");
         CheckpointNotice.SetActive(false);
+        LevelFinished = false;
     }
 
     // Update is called once per frame
