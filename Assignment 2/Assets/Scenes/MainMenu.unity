@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3770547, g: 0.21399665, b: 0.12048733, a: 1}
+  m_IndirectSpecularColor: {r: 0.37715244, g: 0.21400928, b: 0.12049394, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1106,9 +1106,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 0, b: 0, a: 1}
+    m_NormalColor: {r: 1, g: 0.82921207, b: 0.2688679, a: 1}
     m_HighlightedColor: {r: 1, g: 0.6137143, b: 0, a: 1}
-    m_PressedColor: {r: 0.5188679, g: 0, b: 0, a: 1}
+    m_PressedColor: {r: 0.7264151, g: 0.31957826, b: 0.01027944, a: 1}
     m_SelectedColor: {r: 1, g: 0.5886716, b: 0, a: 1}
     m_DisabledColor: {r: 0, g: 0, b: 0, a: 1}
     m_ColorMultiplier: 1
@@ -1639,8 +1639,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278191615
-  m_fontColor: {r: 1, g: 0.01978819, b: 0, a: 1}
+    rgba: 4282766335
+  m_fontColor: {r: 1, g: 0.82921207, b: 0.2688679, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1898,6 +1898,7 @@ GameObject:
   - component: {fileID: 1531603133}
   - component: {fileID: 1531603132}
   - component: {fileID: 1531603131}
+  - component: {fileID: 1531603134}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1971,6 +1972,15 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!45 &1531603134
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531603130}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: 913bbdccf90b8144b9b243a17f828891, type: 2}
 --- !u!1 &1559685696
 GameObject:
   m_ObjectHideFlags: 0
@@ -2022,7 +2032,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.14150941, g: 0.030925913, b: 0.019357424, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2242,9 +2252,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 0, b: 0, a: 1}
+    m_NormalColor: {r: 1, g: 0.82921207, b: 0.2688679, a: 1}
     m_HighlightedColor: {r: 1, g: 0.6137143, b: 0, a: 1}
-    m_PressedColor: {r: 0.5188679, g: 0, b: 0, a: 1}
+    m_PressedColor: {r: 0.7264151, g: 0.31957826, b: 0.01027944, a: 1}
     m_SelectedColor: {r: 1, g: 0.50518703, b: 0, a: 1}
     m_DisabledColor: {r: 0, g: 0, b: 0, a: 1}
     m_ColorMultiplier: 1
@@ -2551,8 +2561,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
-  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
+    rgba: 4282766335
+  m_fontColor: {r: 1, g: 0.82921207, b: 0.2688679, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2711,7 +2721,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.9096166, b: 0.6179246, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2898,9 +2908,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 0.094705716, b: 0, a: 1}
+    m_NormalColor: {r: 1, g: 0.5280474, b: 0.27058828, a: 1}
     m_HighlightedColor: {r: 1, g: 0.9048885, b: 0, a: 1}
-    m_PressedColor: {r: 0.6698113, g: 0, b: 0, a: 1}
+    m_PressedColor: {r: 0.4811321, g: 0.20619948, b: 0, a: 1}
     m_SelectedColor: {r: 1, g: 0.6316455, b: 0, a: 1}
     m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.5019608}
     m_ColorMultiplier: 1
