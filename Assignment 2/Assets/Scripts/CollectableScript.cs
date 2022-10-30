@@ -7,11 +7,12 @@ public class CollectableScript : MonoBehaviour
     public LevelManagerScript levelManagerScript;
     private Vector3 rotationAngle = new Vector3(0, 0, 10);
     private float rotationSpeed = 8;
+    private bool claimed;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        claimed = false;
     }
 
     // Update is called once per frame
@@ -22,11 +23,14 @@ public class CollectableScript : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider collider) {
-        // If the player collided with this object, destroy it
+        // If the player collided with this object, destroy it.
         if (collider.CompareTag("Player")) {
-            Debug.Log("Gem collision");
-            Destroy(gameObject);
-            levelManagerScript.AcquiredCollectable();
+            if (!claimed) {
+                claimed = true;
+                Debug.Log("Gem collision");
+                levelManagerScript.AcquiredCollectable();
+                Destroy(gameObject);
+            }
         }
     }
 }

@@ -13,6 +13,7 @@ public class LevelManagerScript : MonoBehaviour
     private int AcquiredCollectables;
     private GameObject HUD;
     private GameObject LevelFinishScreen;
+    private GameObject CheckpointNotice;
     [SerializeField]
     private TMP_Text CollectableHUDField;
     private GameObject FinishLine;
@@ -28,8 +29,11 @@ public class LevelManagerScript : MonoBehaviour
         HUD = GameObject.FindGameObjectWithTag("HUD");
         LevelFinishScreen = GameObject.FindGameObjectWithTag("LevelFinishScreen");
         LevelFinishScreen.SetActive(false);
-        GameObject checkpointNotice = GameObject.FindGameObjectWithTag("CheckpointNotice");
-        checkpointNotice.SetActive(false);
+        CheckpointNotice = GameObject.FindGameObjectWithTag("CheckpointNotice");
+        CheckpointNotice.SetActive(false);
+        LevelFinished = false;
+        Unpause();
+        HUD.SetActive(true);
     }
 
     // Update is called once per frame
@@ -60,6 +64,7 @@ public class LevelManagerScript : MonoBehaviour
 
     public void QuitGame()
     {
+        // Only works when running the built game, not in the editor
         Application.Quit();
     }
 
@@ -71,7 +76,6 @@ public class LevelManagerScript : MonoBehaviour
     public void AcquiredCollectable() 
     {
         AcquiredCollectables += 1;
-        // AcquiredCollectables = TotalCollectables - GameObject.FindGameObjectsWithTag("Collectable_Gem").Length;
         Debug.Log("Gems collected: " + AcquiredCollectables);
         CollectableHUDField.text = AcquiredCollectables + " / " + TotalCollectables;
     }
@@ -81,5 +85,12 @@ public class LevelManagerScript : MonoBehaviour
         for (int i = 0; i < BrokenBoardsList.Length; i++) {
             BrokenBoardsList[i].GetComponent<BrokenBoardScript>().ResetBoardPosition();
         }
+    }
+
+    public IEnumerator ShowCheckpointNotice()
+    {
+        CheckpointNotice.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        CheckpointNotice.SetActive(false);
     }
 }

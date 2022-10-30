@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class FinishLineScript : MonoBehaviour
 {
-    private LevelManagerScript levelManager;
+    // private LevelManagerScript levelManager;
     // Start is called before the first frame update
     void Start()
     {
-        levelManager = GameObject
-            .FindGameObjectWithTag("LevelManager")
-            .GetComponent<LevelManagerScript>();
+        // levelManager = GameObject
+        //     .FindGameObjectWithTag("LevelManager")
+        //     .GetComponent<LevelManagerScript>();
     }
 
     // Update is called once per frame
@@ -20,7 +20,7 @@ public class FinishLineScript : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider collider) {
-        // If the player landed on the board, start counting down to it falling
+        // If the player crossed the finish line, flag the level as complete
         if (collider.gameObject.CompareTag("Player")) {
             LevelManagerScript.LevelFinished = true;
         }

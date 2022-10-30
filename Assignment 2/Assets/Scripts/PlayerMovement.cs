@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 playerResetPosition;
     public bool isOnGround;
     private Animator animator;
+    private bool killed;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         isOnGround = true;
+        killed = false;
         playerResetPosition = transform.position;
     }
 
@@ -61,12 +63,25 @@ public class PlayerMovement : MonoBehaviour
 
         // Reset player position --------------------------------------
         if (transform.position.y <= -20) {
-            transform.position = playerResetPosition;
+            ResetPlayerPosition();
             levelManagerScript.ResetBrokenBoards();
+        }
+        // Had to disable character controller for this to work.
+        if (killed) {
+            controller.enabled = false;
+            killed = false;
+            ResetPlayerPosition();
+            controller.enabled = true;
         }
     }
 
-    private void Jump() {
+    private void ResetPlayerPosition() 
+    {
+        transform.position = playerResetPosition;
+    }
+
+    private void Jump() 
+    {
         if (Input.GetButtonDown("Jump") && isOnGround) {
             playerVelocity.y += Mathf.Sqrt(JumpForce * -3.0f * Gravity);
             isOnGround = false;
@@ -76,10 +91,27 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
-    public void Bounce() {
+    public void Bounce() 
+    {
         playerVelocity.y += Mathf.Sqrt(JumpForce * -3.0f * Gravity);
         isOnGround = false;
         animator.SetTrigger("Jump");
         Jump();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy")) {
+            StartCoroutine(KillPlayer());
+        }
+    }
+
+    private IEnumerator KillPlayer()
+    {
+        Time.timeScale = 0.2f;
+        yield return new WaitForSeconds(0.5f);
+        Time.timeScale = 1.0f;
+        killed = true;
+        //ResetPlayerPosition();
     }
 }

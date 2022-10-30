@@ -6,13 +6,13 @@ public class CheckpointScript : MonoBehaviour
 {
     [SerializeField]
     private PlayerMovement playerMovement;
-    private GameObject checkpointNotice;
-    private IEnumerator showTempUI;
+    [SerializeField]
+    private LevelManagerScript levelManagerScript;
 
     // Start is called before the first frame update
     void Start()
     {
-        checkpointNotice = GameObject.FindGameObjectWithTag("CheckpointNotice");
+
     }
 
     // Update is called once per frame
@@ -32,23 +32,10 @@ public class CheckpointScript : MonoBehaviour
             playerMovement.playerResetPosition = newResetPos;
 
             // Show checkpoint notice
-            // GameObject checkpointNotice = GameObject.FindGameObjectWithTag("CheckpointNotice");
-            // checkpointNotice.SetActive(true);
-            showTempUI = WaitAndPrint(2f);
-            StartCoroutine(showTempUI);
-            // checkpointNotice.SetActive(false);
+            levelManagerScript.StartCoroutine(levelManagerScript.ShowCheckpointNotice());
 
-            // Destroy the object
+            // Destroy the checkpoint
             Destroy(gameObject);
-
-            
         }
-    }
-
-    private IEnumerator WaitAndPrint(float waitTime)
-    {
-        checkpointNotice.SetActive(true);
-        yield return new WaitForSeconds(2f);
-        checkpointNotice.SetActive(false);
     }
 }
