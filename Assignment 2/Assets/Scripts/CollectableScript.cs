@@ -8,10 +8,15 @@ public class CollectableScript : MonoBehaviour
     private Vector3 rotationAngle = new Vector3(0, 0, 10);
     private float rotationSpeed = 8;
     private bool claimed;
+    private AudioSource audioSource;
+    private Renderer collectableRenderer;
+    public AudioClip audioClip;
 
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        collectableRenderer = GetComponent<Renderer>();
         claimed = false;
     }
 
@@ -27,9 +32,11 @@ public class CollectableScript : MonoBehaviour
         if (collider.CompareTag("Player")) {
             if (!claimed) {
                 claimed = true;
+                audioSource.PlayOneShot(audioClip);
                 Debug.Log("Gem collision");
                 levelManagerScript.AcquiredCollectable();
-                Destroy(gameObject);
+                collectableRenderer.enabled=false;
+                enabled = false;
             }
         }
     }
