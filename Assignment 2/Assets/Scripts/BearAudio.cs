@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BearAudio : MonoBehaviour
 {
-    public AudioClip audioClip;
+    public AudioClip roarClip;
+    public AudioClip stepClip;
     private AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
@@ -14,6 +15,10 @@ public class BearAudio : MonoBehaviour
 
     // Roar on attack
     private void Roar(){
-        audioSource.PlayOneShot(audioClip);
+        audioSource.PlayOneShot(roarClip);
+    }
+
+    private void Step(){
+        audioSource.PlayOneShot(stepClip);
     }
 }
