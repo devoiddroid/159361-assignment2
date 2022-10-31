@@ -9,10 +9,19 @@ public class CheckpointScript : MonoBehaviour
     [SerializeField]
     private LevelManagerScript levelManagerScript;
 
+    private AudioSource audioSource;
+    private Renderer checkpointRenderer;
+    private BoxCollider checkpointCollider;
+    private Rigidbody rb;
+    public AudioClip audioClip;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        audioSource = GetComponent<AudioSource>();
+        rb = GetComponent<Rigidbody>();
+        checkpointCollider = GetComponent<BoxCollider>();
+        checkpointRenderer = GetComponent<Renderer>();
     }
 
     // Update is called once per frame
@@ -33,9 +42,16 @@ public class CheckpointScript : MonoBehaviour
 
             // Show checkpoint notice
             levelManagerScript.StartCoroutine(levelManagerScript.ShowCheckpointNotice());
+            // Play checkpoint audio
+            audioSource.PlayOneShot(audioClip);
+
+            // hide checkpoint, turn off collisions, and disable script (can't destroy or audio won't play)
+            checkpointCollider.enabled=false;
+            checkpointRenderer.enabled=false;
+            enabled=false;
 
             // Destroy the checkpoint
-            Destroy(gameObject);
+            // Destroy(gameObject);
         }
     }
 }

@@ -71,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
             controller.enabled = false;
             killed = false;
             ResetPlayerPosition();
+            levelManagerScript.ResetBrokenBoards();
             controller.enabled = true;
         }
     }
