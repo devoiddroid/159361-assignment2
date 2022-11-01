@@ -13,6 +13,7 @@ public class VolumeControl : MonoBehaviour
         slider = this.gameObject;
     }
 
+    // check which slider it is then adjust the exposed volume parameter associated with that sound type
     public void SetVolume(float volume){
         if(slider.CompareTag("musicvolume")){
             audioMixer.SetFloat("MusicVolume", volume);

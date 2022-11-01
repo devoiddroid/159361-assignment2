@@ -16,6 +16,7 @@ TagManager:
   - MainMenu
   - sfxvolume
   - musicvolume
+  - Fireworks
   layers:
   - Default
   - TransparentFX
