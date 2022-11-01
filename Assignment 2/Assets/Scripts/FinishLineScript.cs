@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class FinishLineScript : MonoBehaviour
 {
+    public AudioClip finishlineClip;
+    public AudioSource audioSource;
     // private LevelManagerScript levelManager;
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         // levelManager = GameObject
         //     .FindGameObjectWithTag("LevelManager")
         //     .GetComponent<LevelManagerScript>();
@@ -23,6 +26,7 @@ public class FinishLineScript : MonoBehaviour
         // If the player crossed the finish line, flag the level as complete
         if (collider.gameObject.CompareTag("Player")) {
             LevelManagerScript.LevelFinished = true;
+            audioSource.PlayOneShot(finishlineClip);
         }
     }
 }
