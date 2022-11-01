@@ -14,6 +14,8 @@ TagManager:
   - ground
   - Enemy
   - MainMenu
+  - sfxvolume
+  - musicvolume
   layers:
   - Default
   - TransparentFX
