@@ -74,6 +74,18 @@ public class PlayerMovement : MonoBehaviour
             levelManagerScript.ResetBrokenBoards();
             controller.enabled = true;
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if (LevelManagerScript.gamePaused) {
+                levelManagerScript.Unpause();
+            } else {
+                // only allow pausing if you're not in the middle of being killed
+                if (Time.timeScale == 1.0f) {
+                    levelManagerScript.Pause();
+                }
+            }
+            levelManagerScript.TogglePauseScreen();
+        }
     }
 
     private void ResetPlayerPosition() 

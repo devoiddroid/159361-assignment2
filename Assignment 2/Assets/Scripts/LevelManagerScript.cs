@@ -14,6 +14,7 @@ public class LevelManagerScript : MonoBehaviour
     private GameObject HUD;
     private GameObject LevelFinishScreen;
     private GameObject CheckpointNotice;
+    private GameObject PauseScreen;
     [SerializeField]
     private TMP_Text CollectableHUDField;
     private GameObject FinishLine;
@@ -31,6 +32,8 @@ public class LevelManagerScript : MonoBehaviour
         LevelFinishScreen.SetActive(false);
         CheckpointNotice = GameObject.FindGameObjectWithTag("CheckpointNotice");
         CheckpointNotice.SetActive(false);
+        PauseScreen = GameObject.FindGameObjectWithTag("PauseScreen");
+        PauseScreen.SetActive(false);
         LevelFinished = false;
         Unpause();
         HUD.SetActive(true);
@@ -60,6 +63,14 @@ public class LevelManagerScript : MonoBehaviour
         gamePaused = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public void TogglePauseScreen() {
+        if (gamePaused) {
+            PauseScreen.SetActive(true);
+        } else {
+            PauseScreen.SetActive(false);
+        }
     }
 
     public void QuitGame()

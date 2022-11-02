@@ -16,6 +16,7 @@ TagManager:
   - MainMenu
   - sfxvolume
   - musicvolume
+  - PauseScreen
   layers:
   - Default
   - TransparentFX
