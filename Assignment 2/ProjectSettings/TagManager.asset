@@ -17,6 +17,7 @@ TagManager:
   - sfxvolume
   - musicvolume
   - PauseScreen
+  - Fireworks
   layers:
   - Default
   - TransparentFX

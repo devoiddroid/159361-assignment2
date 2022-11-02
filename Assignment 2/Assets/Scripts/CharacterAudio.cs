@@ -16,19 +16,19 @@ public class CharacterAudio : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    // Roar on attack
+    // walking step sound
     private void WalkStep(){
         audioSource.PlayOneShot(walkStepClip);
     }
-
+    // running step sound
     private void RunStep(){
         audioSource.PlayOneShot(runStepClip);
     }
-
+    // sound for jump takeoff
     private void JumpUp(){
         audioSource.PlayOneShot(jumpClip);
     }
-
+    // sound for jump landing
     private void JumpLand(){
         audioSource.PlayOneShot(landClip);
     }

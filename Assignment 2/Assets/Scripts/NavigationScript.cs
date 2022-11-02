@@ -21,7 +21,9 @@ public class NavigationScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // set destination
         navMeshAgent.destination = navigateTo.position;
+        // stop moving when close to destination
         if (Vector3.Distance(transform.position, navigateTo.position) <= 0.1){
             animator.SetFloat("MoveSpeed", 0);
         }
